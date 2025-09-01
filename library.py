@@ -15,19 +15,24 @@ Future OOP Extension:
 - Library as a Library class with borrow() and return() methods.
 """
 
-library = []
+library = {}
 
-def add_book(book):
-    """Add a new book into the library with flexible details.
-        return "Book {book_title} added successfully!"
-    """
+def add_book(i,t,a,**kw): library[i]={"title":t,"author":a,"available":True,**kw}
+def borrow(i):
+    if library.get(i) and library[i]["available"]: library[i]["available"]=False
+def ret(i):
+    if library.get(i): library[i]["available"]=True
+def search(*args):
+    return [b for b in library.values() if any(str(v).lower() in str(b).lower() for v in args)]
+def report():
+    for i,b in library.items(): print(i,b)
 
-def search_books(search_param):
-    """Search for books by multiple keywords (title, author).
-    return books that match search description.
-    """
+while True:
+    c=input("\n1.Add 2.Borrow 3.Return 4.Search 5.Report 6.Exit: ")
+    if c=="1": add_book(input("ID:"),input("Title:"),input("Author:"),year=input("Year:"),genre=input("Genre:"))
+    elif c=="2": borrow(input("ID:"))
+    elif c=="3": ret(input("ID:"))
+    elif c=="4": print(search(input("Search term:")))
+    elif c=="5": report()
+    elif c=="6": break
 
-def borrow_book(book_id):
-    """Borrow a book if available (msg: You borrowed {book_title}).
-        else-> msg: Book {book_title} not available
-    """

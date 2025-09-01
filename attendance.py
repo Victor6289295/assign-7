@@ -14,29 +14,28 @@ Future OOP Extension:
 - AttendanceRegister class that manages records.
 """
 
-import datetime
 
+
+from datetime import date
 attendance = {}
 
-def register_student(student_id, name):
-    """Register a student in the system."""
-    pass
+def mark_attendance(sid, name, status):
+    today = str(date.today())
+    if sid not in attendance:
+        attendance[sid] = {"name": name, "present": [], "absent": []}
+    if status == "p": attendance[sid]["present"].append(today)
+    else: attendance[sid]["absent"].append(today)
 
-def mark_present(student_ids):
-    """Mark multiple students as present for today."""
-    today = str(datetime.date.today())
-    # implement logic
-    pass
+def show_report():
+    for sid, rec in attendance.items():
+        print(f"{sid}-{rec['name']}: {len(rec['present'])}P, {len(rec['absent'])}A")
 
-def mark_absent(student_ids):
-    """Mark multiple students as absent for today."""
-    today = str(datetime.date.today())
-    #implement logic
-    pass
+while True:
+    sid = input("ID (q=quit): ")
+    if sid == "q": break
+    name = input("Name: ")
+    status = input("Present/Absent (p/a): ")
+    mark_attendance(sid, name, status)
 
-def get_report(**kwargs):
-    """Generate attendance report with optional filters."""
-    report = {}
-    # implement logic
+show_report()
 
-    return report

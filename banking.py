@@ -13,24 +13,21 @@ Future OOP Extension:
 - BankAccount class with methods deposit(), withdraw(), transfer().
 - Bank class to manage all accounts.
 """
-
 accounts = {}
 
-def create_account(account_number, name, **kwargs):
-    """Create an account with optional features like overdraft_limit."""
-    pass
+def create(acc, name, bal=0): accounts[acc]={"name":name,"balance":bal}
+def deposit(acc,*amt): accounts[acc]["balance"]+=sum(amt)
+def withdraw(acc,*amt): 
+    t=sum(amt); 
+    if accounts[acc]["balance"]>=t: accounts[acc]["balance"]-=t
+def report(): 
+    for a,r in accounts.items(): print(f"{a}-{r['name']}: {r['balance']}")
 
-def deposit(account_number, amount):
-    """Deposit money into account.
-        return "Account not found!" (if account does not exists)
-        return Deposited {amount} into {accounts name}'s account. if account exists
-    """
-    pass
+while True:
+    c=input("\n1.Create 2.Deposit 3.Withdraw 4.Report 5.Exit: ")
+    if c=="1": create(input("Acc:"),input("Name:"),float(input("Bal:")))
+    elif c=="2": deposit(input("Acc:"),float(input("Amt:")))
+    elif c=="3": withdraw(input("Acc:"),float(input("Amt:")))
+    elif c=="4": report()
+    elif c=="5": break
 
-def withdraw(account_number, amount):
-    """Withdraw money if balance is sufficient. else: insufficient funds"""
-    pass
-
-def transfer(from_acc, to_acc, amount):
-    """Transfer money between accounts. if funds is sufficient"""
-    pass

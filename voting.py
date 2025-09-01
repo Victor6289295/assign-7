@@ -16,23 +16,18 @@ Future OOP Extension:
 - Election as a manager class.
 """
 
-candidates = {}
-voters = set()
+candidates, voters = {}, set()
 
-def register_candidates(*args, **kwargs):
-    """Register candidates with optional metadata.
-    """
-    pass
+def register(*names,**kw): [candidates.setdefault(n,{"votes":0,**kw}) for n in names]
+def vote(voter,cand):
+    if voter not in voters and cand in candidates:
+        candidates[cand]["votes"]+=1; voters.add(voter)
+def report(): [print(n,"-",c["votes"],c) for n,c in candidates.items()]
 
-def cast_vote(voter_id, candidate):
-    """Cast vote if voter has not voted before.
-        after all the vote logic is completeted sucessfully,
-        return: Vote casted for {candidate}.
-    """
-    pass
+while True:
+    c=input("\n1.Register 2.Vote 3.Report 4.Exit: ")
+    if c=="1": register(*input("Names(comma): ").split(","),party=input("Party:"),region=input("Region:"))
+    elif c=="2": vote(input("VoterID:"),input("Candidate:"))
+    elif c=="3": report()
+    elif c=="4": break
 
-def election_result():
-    """Return the winner(s)."""
-    # max_votes = #add logic
-    # winners = #add logic
-    # return {"winners": winners, "candidates": candidates}
